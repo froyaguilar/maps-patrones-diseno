@@ -2,9 +2,13 @@ package com.froy.navigator.controller;
 
 import com.froy.navigator.dto.RouteRequest;
 import com.froy.navigator.dto.RouteResponse;
+import com.froy.navigator.exception.ApiError;
 import com.froy.navigator.service.RoutePlanner;
 import com.froy.navigator.service.auditing.AuditOperation;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -47,9 +51,72 @@ public class RouteController {
     @AuditOperation("Ruta Planificada")
     @Operation(summary = "Planificar una ruta", description = "Calcula una ruta entre dos puntos usando un modo de transporte")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Ruta calculada correctamente"),
-            @ApiResponse(responseCode = "400", description = "Solicitud inválida"),
-            @ApiResponse(responseCode = "404", description = "No se encontró la ruta")
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Ruta calculada correctamente",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = RouteResponse.class),
+                            examples = {
+                                    @ExampleObject(
+                                            name = "rutaEjemplo",
+                                            value = """
+                                                    {
+                                                      "distanceKm": 10.5,
+                                                      "durationMinutes": 25,
+                                                      "steps": [
+                                                        "Salga de Av. Vallarta y continúe 300 m",
+                                                        "Gire a la izquierda en Calle López Cotilla"
+                                                      ],
+                                                      "mode": "driving"
+                                                    }
+                                                    """
+                                    )
+                            }
+                    )
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Solicitud inválida (parámetros incorrectos o incompletos)",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiError.class),
+                            examples = {
+                                    @ExampleObject(
+                                            name = "errorValidacion",
+                                            value = """
+                                                    {
+                                                      "timestamp": "2025-08-10T14:00:00Z",
+                                                      "status": "BAD_REQUEST",
+                                                      "message": "Error de validación",
+                                                      "details": "origin.lat: Latitud inválida; mode: Debe ser 'driving', 'walking' o 'bicycling'"
+                                                    }
+                                                    """
+                                    )
+                            }
+                    )
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "No se encontró una ruta entre los puntos dados",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiError.class),
+                            examples = {
+                                    @ExampleObject(
+                                            name = "rutaNoEncontrada",
+                                            value = """
+                                                    {
+                                                      "timestamp": "2025-08-10T14:01:00Z",
+                                                      "status": "NOT_FOUND",
+                                                      "message": "No se encontró la ruta",
+                                                      "details": "No hay ruta entre el origen y el destino proporcionados"
+                                                    }
+                                                    """
+                                    )
+                            }
+                    )
+            )
     })
     public ResponseEntity<RouteResponse> planRoute(@Valid @RequestBody RouteRequest request) {
         RouteResponse response = routePlanner.planRoute(request);
