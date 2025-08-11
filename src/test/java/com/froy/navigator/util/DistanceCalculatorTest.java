@@ -21,8 +21,8 @@ class DistanceCalculatorTest {
         GeoPoint origin = new GeoPoint(20.6736, -103.344);
         GeoPoint destination = new GeoPoint(19.4326, -99.1332);
 
-        // Expected distance (approximate, based on online calculators)
-        double expectedDistanceKm = 512.0; 
+        // Expected great-circle distance in kilometers (approx.)
+        double expectedDistanceKm = 460.95;
 
         double actualDistance = DistanceCalculator.calculateDistance(origin, destination);
 
@@ -48,10 +48,8 @@ class DistanceCalculatorTest {
         GeoPoint point1 = new GeoPoint(0.0, 0.0); // Prime Meridian
         GeoPoint point2 = new GeoPoint(0.0, 90.0); // 90 degrees East
 
-        // Expected distance: 1/4 of Earth's circumference at equator (approx)
-        // Circumference = 2 * PI * R = 2 * 3.14159 * 6371 = 40030 km
-        // 1/4 of that is ~10007.5 km
-        double expectedDistance = 10007.5;
+        // Expected distance: 1/4 of Earth's circumference at the equator
+        double expectedDistance = Math.PI * DistanceCalculator.EARTH_RADIUS_KM / 2;
 
         double actualDistance = DistanceCalculator.calculateDistance(point1, point2);
 
@@ -81,8 +79,8 @@ class DistanceCalculatorTest {
         GeoPoint origin = new GeoPoint(-34.6037, -58.3816); // Buenos Aires
         GeoPoint destination = new GeoPoint(-33.4489, -70.6693); // Santiago
 
-        // Expected distance (approximate)
-        double expectedDistanceKm = 1050.0;
+        // Expected great-circle distance in kilometers (approx.)
+        double expectedDistanceKm = 1138.92;
 
         double actualDistance = DistanceCalculator.calculateDistance(origin, destination);
 
