@@ -8,14 +8,14 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Custom validation annotation to ensure a value is a valid geographical coordinate.
- * Works for both latitude and longitude.
+ * Anotación de validación personalizada para asegurar que un valor sea una coordenada geográfica válida.
+ * Funciona tanto para latitud como para longitud.
  */
 @Target({ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = GeoCoordinatesValidator.class)
 public @interface GeoCoordinates {
-    String message() default "Invalid geographical coordinates";
+    String message() default "Coordenadas geográficas inválidas";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

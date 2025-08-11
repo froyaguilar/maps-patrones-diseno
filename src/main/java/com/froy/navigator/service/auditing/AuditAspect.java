@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
- * Aspect for auditing operations annotated with {@link AuditOperation}.
- * Intercepts method calls, executes the method, and then records an audit entry
- * using the AuditService.
+ * Aspecto para auditar operaciones anotadas con {@link AuditOperation}.
+ * Intercepta las llamadas a métodos, ejecuta el método y luego registra una entrada
+ * de auditoría utilizando AuditService.
  */
 @Aspect
 @Component
@@ -19,9 +19,9 @@ public class AuditAspect {
     private final AuditService auditService;
 
     /**
-     * Constructs an AuditAspect with the given AuditService.
+     * Construye un AuditAspect con el AuditService proporcionado.
      *
-     * @param auditService The service used to persist audit entries.
+     * @param auditService Servicio utilizado para persistir las entradas de auditoría.
      */
     @Autowired
     public AuditAspect(AuditService auditService) {
@@ -29,13 +29,13 @@ public class AuditAspect {
     }
 
     /**
-     * Around advice for methods annotated with @AuditOperation.
-     * It intercepts the method call, executes the original method, and then
-     * logs an audit entry with the action defined in the annotation and the method arguments.
+     * Consejo alrededor para métodos anotados con @AuditOperation.
+     * Intercepta la llamada, ejecuta el método original y registra una entrada de auditoría
+     * con la acción definida en la anotación y los argumentos del método.
      *
-     * @param joinPoint The join point representing the intercepted method.
-     * @return The result of the original method execution.
-     * @throws Throwable if the original method throws an exception.
+     * @param joinPoint Punto de unión que representa el método interceptado.
+     * @return Resultado de la ejecución del método original.
+     * @throws Throwable si el método original lanza una excepción.
      */
     @Around("@annotation(com.froy.navigator.service.auditing.AuditOperation)")
     public Object auditOperation(ProceedingJoinPoint joinPoint) throws Throwable {
@@ -44,15 +44,15 @@ public class AuditAspect {
         String action = auditOperation.value();
 
         Object[] args = joinPoint.getArgs();
-        String message = String.format("Method: %s, Arguments: %s", signature.getName(), java.util.Arrays.toString(args));
+        String message = String.format("Método: %s, Argumentos: %s", signature.getName(), java.util.Arrays.toString(args));
 
         try {
-            Object result = joinPoint.proceed(); // Execute the original method
-            auditService.audit(action, message + ", Result: " + result);
+            Object result = joinPoint.proceed(); // Ejecuta el método original
+            auditService.audit(action, message + ", Resultado: " + result);
             return result;
         } catch (Throwable e) {
             auditService.audit(action, message + ", Error: " + e.getMessage());
-            throw e; // Re-throw the exception after auditing
+            throw e; // Re-lanza la excepción después de auditar
         }
     }
 }

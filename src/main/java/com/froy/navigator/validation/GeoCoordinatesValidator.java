@@ -4,8 +4,8 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
 /**
- * Validator for the @GeoCoordinates annotation.
- * Checks if a double value is within the valid range for latitude or longitude.
+ * Validador para la anotación @GeoCoordinates.
+ * Verifica si un valor double está dentro del rango válido para latitud o longitud.
  */
 public class GeoCoordinatesValidator implements ConstraintValidator<GeoCoordinates, Double> {
 
@@ -14,7 +14,7 @@ public class GeoCoordinatesValidator implements ConstraintValidator<GeoCoordinat
         if (value == null) {
             return false;
         }
-        // Basic validation for latitude (-90 to 90) and longitude (-180 to 180)
+        // Validación básica para latitud (-90 a 90) y longitud (-180 a 180)
         return value >= -180 && value <= 180;
     }
 }

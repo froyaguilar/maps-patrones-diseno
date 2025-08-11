@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * Concrete strategy for planning routes by bike.
- * Avoids highways and prefers shorter, more scenic routes.
+ * Estrategia concreta para planificar rutas en bicicleta.
+ * Evita las autopistas y prefiere rutas más cortas y escénicas.
  */
 @Component("BIKE")
 public class BikeRouteStrategy implements RouteStrategy {
@@ -17,13 +17,13 @@ public class BikeRouteStrategy implements RouteStrategy {
     @Override
     public RouteResponse compute(RouteRequest request) {
         double distance = DistanceCalculator.calculateDistance(request.origin(), request.destination());
-        // Simulate slower travel for bikes, avoiding highways
-        int duration = (int) (distance / 15 * 60); // 15 km/h average speed
+        // Simula un viaje más lento para bicicletas, evitando autopistas
+        int duration = (int) (distance / 15 * 60); // velocidad promedio 15 km/h
         List<String> steps = List.of(
-                "Start at " + request.origin(),
-                "Follow bike paths and secondary roads",
-                "Avoid highways",
-                "Arrive at " + request.destination()
+                "Inicio en " + request.origin(),
+                "Sigue ciclovías y carreteras secundarias",
+                "Evita autopistas",
+                "Llegada a " + request.destination()
         );
         return new RouteResponse(round(distance), duration, steps, mode());
     }

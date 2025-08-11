@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 /**
- * Entity representing an audit entry for important operations within the application.
- * Stores details such as action, timestamp, and any relevant messages.
+ * Entidad que representa una entrada de auditoría para operaciones importantes de la aplicación.
+ * Almacena detalles como acción, marca de tiempo y mensajes relevantes.
  */
 @Entity
 @Table(name = "audit_entries")
@@ -21,10 +21,10 @@ public class AuditEntry {
     @Column(nullable = false)
     private LocalDateTime timestamp;
 
-    @Lob // For potentially large text fields
+    @Lob // Para campos de texto potencialmente grandes
     private String message;
 
-    // Default constructor for JPA
+    // Constructor por defecto para JPA
     public AuditEntry() {
     }
 
@@ -34,7 +34,7 @@ public class AuditEntry {
         this.timestamp = LocalDateTime.now();
     }
 
-    // Getters and Setters
+    // Getters y Setters
     public Long getId() {
         return id;
     }

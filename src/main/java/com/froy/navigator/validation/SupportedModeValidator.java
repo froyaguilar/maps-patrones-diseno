@@ -7,8 +7,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * Validator for the @SupportedMode annotation.
- * Checks if the given string mode is one of the predefined supported modes (CAR, BIKE, MOTORCYCLE).
+ * Validador para la anotación @SupportedMode.
+ * Verifica si el modo proporcionado es uno de los modos soportados (CAR, BIKE, MOTORCYCLE).
  */
 public class SupportedModeValidator implements ConstraintValidator<SupportedMode, String> {
 
@@ -18,7 +18,7 @@ public class SupportedModeValidator implements ConstraintValidator<SupportedMode
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
         if (value == null) {
-            return false; // Or true, depending on whether null is considered valid for your use case
+            return false; // O true, dependiendo de si se permite null en tu caso de uso
         }
         return SUPPORTED_MODES.contains(value.toUpperCase());
     }
