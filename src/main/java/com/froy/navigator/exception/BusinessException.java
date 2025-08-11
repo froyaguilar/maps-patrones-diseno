@@ -4,8 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- * Custom exception for business logic errors.
- * Maps to HTTP 400 Bad Request by default.
+ * Excepción personalizada para errores de lógica de negocio.
+ * Se asigna al código HTTP 400 Bad Request por defecto.
  */
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class BusinessException extends RuntimeException {

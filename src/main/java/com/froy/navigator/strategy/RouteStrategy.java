@@ -4,24 +4,24 @@ import com.froy.navigator.dto.RouteRequest;
 import com.froy.navigator.dto.RouteResponse;
 
 /**
- * Interface for route planning strategies.
- * Implements the Strategy pattern, allowing different algorithms for route calculation
- * based on the mode of transport.
+ * Interfaz para las estrategias de planificación de rutas.
+ * Implementa el patrón Strategy, permitiendo diferentes algoritmos de cálculo
+ * según el modo de transporte.
  */
 public interface RouteStrategy {
 
     /**
-     * Computes a route based on the given request.
+     * Calcula una ruta basada en la solicitud dada.
      *
-     * @param request The route request containing origin, destination, and mode.
-     * @return A RouteResponse containing the calculated distance, duration, steps, and mode.
+     * @param request Petición de ruta que contiene origen, destino y modo.
+     * @return RouteResponse con distancia, duración, pasos y modo calculados.
      */
     RouteResponse compute(RouteRequest request);
 
     /**
-     * Returns the mode of transport handled by this strategy.
+     * Devuelve el modo de transporte manejado por esta estrategia.
      *
-     * @return A string representing the transport mode (e.g., "CAR", "BIKE", "MOTORCYCLE").
+     * @return Cadena que representa el modo de transporte (ej. "CAR", "BIKE", "MOTORCYCLE").
      */
     String mode();
 }

@@ -8,8 +8,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Service for managing audit operations.
- * Responsible for saving audit entries to the database.
+ * Servicio para gestionar las operaciones de auditoría.
+ * Responsable de guardar las entradas de auditoría en la base de datos.
  */
 @Service
 public class AuditService {
@@ -17,9 +17,9 @@ public class AuditService {
     private final AuditEntryRepository auditEntryRepository;
 
     /**
-     * Constructs an AuditService with the given AuditEntryRepository.
+     * Construye un AuditService con el AuditEntryRepository proporcionado.
      *
-     * @param auditEntryRepository The repository for audit entries.
+     * @param auditEntryRepository Repositorio para las entradas de auditoría.
      */
     @Autowired
     public AuditService(AuditEntryRepository auditEntryRepository) {
@@ -27,12 +27,12 @@ public class AuditService {
     }
 
     /**
-     * Saves a new audit entry to the database.
-     * Uses Propagation.REQUIRES_NEW to ensure the audit entry is saved
-     * even if the calling transaction fails.
+     * Guarda una nueva entrada de auditoría en la base de datos.
+     * Usa Propagation.REQUIRES_NEW para asegurar que la entrada se persista
+     * incluso si la transacción llamante falla.
      *
-     * @param action The action performed (e.g., "Route Planned").
-     * @param message A detailed message about the audit event.
+     * @param action Acción realizada (p. ej., "Ruta Planificada").
+     * @param message Mensaje detallado sobre el evento de auditoría.
      */
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void audit(String action, String message) {

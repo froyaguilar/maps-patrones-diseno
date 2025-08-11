@@ -4,12 +4,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 /**
- * Configuration class for JPA repositories.
- * Enables JPA repositories and specifies the base package where repositories are located.
+ * Clase de configuración para los repositorios JPA.
+ * Habilita los repositorios y especifica el paquete base donde se encuentran.
  */
 @Configuration
 @EnableJpaRepositories(basePackages = "com.froy.navigator.repository")
 public class DatasourceConfig {
-    // This class primarily serves to enable JPA repositories.
-    // DataSource configuration is handled via application.yml and application-prod.yml
+    // Esta clase solo habilita los repositorios JPA.
+    // La configuración del DataSource se maneja en application.yml y application-prod.yml
 }

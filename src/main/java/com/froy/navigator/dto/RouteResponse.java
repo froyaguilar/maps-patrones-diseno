@@ -3,8 +3,8 @@ package com.froy.navigator.dto;
 import java.util.List;
 
 /**
- * Data Transfer Object for the route plan response.
- * Contains the calculated distance, duration, steps, and the mode used.
+ * Objeto de Transferencia de Datos para la respuesta de la planificación de la ruta.
+ * Contiene la distancia calculada, duración, pasos y el modo utilizado.
  */
 public record RouteResponse(
         double distanceKm,

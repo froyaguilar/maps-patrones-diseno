@@ -5,8 +5,8 @@ import org.springframework.http.HttpStatus;
 import java.time.LocalDateTime;
 
 /**
- * Represents a standardized error response for the API.
- * Includes a timestamp, HTTP status, error message, and optional details.
+ * Representa una respuesta de error estandarizada para la API.
+ * Incluye marca de tiempo, estado HTTP, mensaje de error y detalles opcionales.
  */
 public record ApiError(
         LocalDateTime timestamp,

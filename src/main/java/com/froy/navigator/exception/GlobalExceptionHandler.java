@@ -8,18 +8,18 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 
 /**
- * Global exception handler for the REST API.
- * Catches specific exceptions and returns standardized ApiError responses.
+ * Manejador global de excepciones para la API REST.
+ * Captura excepciones específicas y retorna respuestas ApiError estandarizadas.
  */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
     /**
-     * Handles custom BusinessException and returns a BAD_REQUEST status.
+     * Maneja la BusinessException personalizada y retorna un estado BAD_REQUEST.
      *
-     * @param ex The BusinessException that was thrown.
-     * @param request The web request during which the exception occurred.
-     * @return A ResponseEntity containing an ApiError with BAD_REQUEST status.
+     * @param ex Excepción BusinessException lanzada.
+     * @param request Petición web durante la cual ocurrió la excepción.
+     * @return ResponseEntity con ApiError y estado BAD_REQUEST.
      */
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<ApiError> handleBusinessException(BusinessException ex, WebRequest request) {
@@ -32,11 +32,11 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * Handles custom NotFoundException and returns a NOT_FOUND status.
+     * Maneja la NotFoundException personalizada y retorna un estado NOT_FOUND.
      *
-     * @param ex The NotFoundException that was thrown.
-     * @param request The web request during which the exception occurred.
-     * @return A ResponseEntity containing an ApiError with NOT_FOUND status.
+     * @param ex Excepción NotFoundException lanzada.
+     * @param request Petición web durante la cual ocurrió la excepción.
+     * @return ResponseEntity con ApiError y estado NOT_FOUND.
      */
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ApiError> handleNotFoundException(NotFoundException ex, WebRequest request) {
@@ -49,12 +49,12 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * Handles validation errors caused by @Valid and @Validated annotations.
-     * Extracts error messages from MethodArgumentNotValidException and returns a BAD_REQUEST status.
+     * Maneja los errores de validación provocados por las anotaciones @Valid y @Validated.
+     * Extrae los mensajes de error de MethodArgumentNotValidException y retorna BAD_REQUEST.
      *
-     * @param ex The MethodArgumentNotValidException that was thrown.
-     * @param request The web request during which the exception occurred.
-     * @return A ResponseEntity containing an ApiError with BAD_REQUEST status and validation details.
+     * @param ex Excepción MethodArgumentNotValidException lanzada.
+     * @param request Petición web durante la cual ocurrió la excepción.
+     * @return ResponseEntity con ApiError y detalles de validación.
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiError> handleValidationExceptions(MethodArgumentNotValidException ex, WebRequest request) {
@@ -64,24 +64,24 @@ public class GlobalExceptionHandler {
 
         ApiError apiError = new ApiError(
                 HttpStatus.BAD_REQUEST,
-                "Validation Error",
+                "Error de validación",
                 errors + " - " + request.getDescription(false)
         );
         return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
     }
 
     /**
-     * Catches any other unexpected exceptions and returns an INTERNAL_SERVER_ERROR status.
+     * Captura cualquier otra excepción inesperada y retorna INTERNAL_SERVER_ERROR.
      *
-     * @param ex The unexpected Exception that was thrown.
-     * @param request The web request during which the exception occurred.
-     * @return A ResponseEntity containing an ApiError with INTERNAL_SERVER_ERROR status.
+     * @param ex Excepción inesperada lanzada.
+     * @param request Petición web durante la cual ocurrió la excepción.
+     * @return ResponseEntity con ApiError y estado INTERNAL_SERVER_ERROR.
      */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiError> handleAllUncaughtException(Exception ex, WebRequest request) {
         ApiError apiError = new ApiError(
                 HttpStatus.INTERNAL_SERVER_ERROR,
-                "An unexpected error occurred",
+                "Ocurrió un error inesperado",
                 ex.getLocalizedMessage() + " - " + request.getDescription(false)
         );
         return new ResponseEntity<>(apiError, HttpStatus.INTERNAL_SERVER_ERROR);

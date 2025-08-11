@@ -5,8 +5,8 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
 /**
- * Data Transfer Object for requesting a route plan.
- * Contains the origin, destination, and mode of transport.
+ * Objeto de Transferencia de Datos para solicitar una planificación de ruta.
+ * Contiene el origen, destino y modo de transporte.
  */
 public record RouteRequest(
         @NotNull @Valid GeoPoint origin,

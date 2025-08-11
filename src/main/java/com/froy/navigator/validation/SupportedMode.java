@@ -8,13 +8,13 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Custom validation annotation to ensure a string value represents a supported transport mode.
+ * Anotación de validación personalizada para asegurar que un valor represente un modo de transporte soportado.
  */
 @Target({ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = SupportedModeValidator.class)
 public @interface SupportedMode {
-    String message() default "Unsupported transport mode. Allowed modes are CAR, BIKE, MOTORCYCLE.";
+    String message() default "Modo de transporte no soportado. Los modos permitidos son CAR, BIKE, MOTORCYCLE.";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

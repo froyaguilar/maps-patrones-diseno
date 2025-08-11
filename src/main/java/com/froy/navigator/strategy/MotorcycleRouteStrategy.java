@@ -8,8 +8,9 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * Concrete strategy for planning routes by motorcycle.
- * Combines aspects of car and bike strategies, offering a balance of speed and flexibility.
+ * Estrategia concreta para planificar rutas en motocicleta.
+ * Combina aspectos de las estrategias de auto y bicicleta, ofreciendo un balance
+ * entre velocidad y flexibilidad.
  */
 @Component("MOTORCYCLE")
 public class MotorcycleRouteStrategy implements RouteStrategy {
@@ -17,12 +18,12 @@ public class MotorcycleRouteStrategy implements RouteStrategy {
     @Override
     public RouteResponse compute(RouteRequest request) {
         double distance = DistanceCalculator.calculateDistance(request.origin(), request.destination());
-        // Simulate moderate speed for motorcycles, with some flexibility
-        int duration = (int) (distance / 60 * 60); // 60 km/h average speed
+        // Simula una velocidad moderada para motocicletas, con cierta flexibilidad
+        int duration = (int) (distance / 60 * 60); // velocidad promedio 60 km/h
         List<String> steps = List.of(
-                "Start at " + request.origin(),
-                "Take a flexible route, using main roads and some shortcuts",
-                "Arrive at " + request.destination()
+                "Inicio en " + request.origin(),
+                "Toma una ruta flexible, usando carreteras principales y algunos atajos",
+                "Llegada a " + request.destination()
         );
         return new RouteResponse(round(distance), duration, steps, mode());
     }

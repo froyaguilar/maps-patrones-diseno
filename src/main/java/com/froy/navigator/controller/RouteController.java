@@ -4,6 +4,10 @@ import com.froy.navigator.dto.RouteRequest;
 import com.froy.navigator.dto.RouteResponse;
 import com.froy.navigator.service.RoutePlanner;
 import com.froy.navigator.service.auditing.AuditOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,34 +16,41 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * REST Controller for handling route planning requests.
- * Exposes an endpoint to plan routes using different transport modes.
+ * Controlador REST que gestiona las solicitudes de planificación de rutas.
+ * Expone un endpoint para planificar rutas utilizando diferentes modos de transporte.
  */
 @RestController
 @RequestMapping("/api/v1/routes")
+@Tag(name = "Rutas", description = "Operaciones para planificar rutas")
 public class RouteController {
 
     private final RoutePlanner routePlanner;
 
     /**
-     * Constructs a RouteController with the given RoutePlanner.
+     * Crea una instancia de RouteController con el servicio RoutePlanner.
      *
-     * @param routePlanner The service responsible for planning routes.
+     * @param routePlanner Servicio responsable de planificar rutas.
      */
     public RouteController(RoutePlanner routePlanner) {
         this.routePlanner = routePlanner;
     }
 
     /**
-     * Plans a route based on the provided origin, destination, and transport mode.
-     * The request body is validated using Jakarta Bean Validation.
-     * An audit entry is created for each successful route planning operation.
+     * Planifica una ruta basada en el origen, destino y modo de transporte proporcionados.
+     * El cuerpo de la petición se valida con Jakarta Bean Validation.
+     * Se crea una entrada de auditoría por cada planificación exitosa.
      *
-     * @param request The RouteRequest containing the origin, destination, and desired mode.
-     * @return A ResponseEntity containing the RouteResponse with the calculated route details.
+     * @param request Objeto RouteRequest con origen, destino y modo deseado.
+     * @return ResponseEntity con los detalles de la ruta calculada.
      */
     @PostMapping("/plan")
-    @AuditOperation("Route Planned")
+    @AuditOperation("Ruta Planificada")
+    @Operation(summary = "Planificar una ruta", description = "Calcula una ruta entre dos puntos usando un modo de transporte")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Ruta calculada correctamente"),
+            @ApiResponse(responseCode = "400", description = "Solicitud inválida"),
+            @ApiResponse(responseCode = "404", description = "No se encontró la ruta")
+    })
     public ResponseEntity<RouteResponse> planRoute(@Valid @RequestBody RouteRequest request) {
         RouteResponse response = routePlanner.planRoute(request);
         return ResponseEntity.ok(response);

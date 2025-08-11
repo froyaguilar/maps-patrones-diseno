@@ -5,8 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 /**
- * Repository interface for managing {@link AuditEntry} entities.
- * Provides standard CRUD operations and allows for custom queries if needed.
+ * Interfaz de repositorio para gestionar entidades {@link AuditEntry}.
+ * Proporciona operaciones CRUD estándar y permite consultas personalizadas si es necesario.
  */
 @Repository
 public interface AuditEntryRepository extends JpaRepository<AuditEntry, Long> {

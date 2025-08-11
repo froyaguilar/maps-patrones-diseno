@@ -10,18 +10,18 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 
 /**
- * Repository interface for managing {@link RouteStats} entities.
- * Provides standard CRUD operations and custom native queries for specific statistical needs.
+ * Interfaz de repositorio para gestionar entidades {@link RouteStats}.
+ * Proporciona operaciones CRUD estándar y consultas nativas para necesidades estadísticas específicas.
  */
 @Repository
 public interface RouteStatsRepository extends JpaRepository<RouteStats, Long> {
 
     /**
-     * Deletes all route statistics entries older than a specified date.
-     * This is an example of a native query with a modifying operation.
+     * Elimina todas las entradas de estadísticas de rutas anteriores a una fecha específica.
+     * Ejemplo de una consulta nativa con una operación de modificación.
      *
-     * @param dateTime The threshold date and time. Entries older than this will be deleted.
-     * @return The number of deleted entities.
+     * @param dateTime Fecha y hora límite. Las entradas anteriores serán eliminadas.
+     * @return Número de entidades eliminadas.
      */
     @Modifying
     @Transactional

@@ -14,9 +14,9 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- * Service responsible for planning routes using different strategies.
- * Implements the Context part of the Strategy pattern, dynamically selecting
- * the appropriate RouteStrategy based on the requested mode.
+ * Servicio responsable de planificar rutas utilizando diferentes estrategias.
+ * Implementa la parte de Contexto del patrón Strategy, seleccionando dinámicamente
+ * la RouteStrategy adecuada según el modo solicitado.
  */
 @Service
 public class RoutePlanner {
@@ -25,9 +25,9 @@ public class RoutePlanner {
     private Map<String, RouteStrategy> strategies;
 
     /**
-     * Constructs a RoutePlanner with the Spring ApplicationContext.
+     * Construye un RoutePlanner con el ApplicationContext de Spring.
      *
-     * @param applicationContext The Spring ApplicationContext, used to retrieve all RouteStrategy beans.
+     * @param applicationContext Contexto de Spring utilizado para obtener todos los beans de RouteStrategy.
      */
     @Autowired
     public RoutePlanner(ApplicationContext applicationContext) {
@@ -35,9 +35,9 @@ public class RoutePlanner {
     }
 
     /**
-     * Initializes the map of strategies after the bean has been constructed.
-     * It collects all beans that implement RouteStrategy and maps them by their mode.
-     * This avoids explicit if/else or switch statements for strategy selection.
+     * Inicializa el mapa de estrategias después de la creación del bean.
+     * Recolecta todos los beans que implementan RouteStrategy y los mapea por su modo.
+     * Esto evita utilizar sentencias if/else o switch para seleccionar la estrategia.
      */
     @PostConstruct
     public void init() {
@@ -48,16 +48,16 @@ public class RoutePlanner {
     }
 
     /**
-     * Plans a route based on the provided request and selected transport mode.
+     * Planifica una ruta basada en la solicitud proporcionada y el modo de transporte seleccionado.
      *
-     * @param request The RouteRequest containing origin, destination, and desired mode.
-     * @return A RouteResponse with the calculated route details.
-     * @throws BusinessException if the requested transport mode is not supported.
+     * @param request Objeto RouteRequest que contiene origen, destino y modo deseado.
+     * @return RouteResponse con los detalles de la ruta calculada.
+     * @throws BusinessException si el modo de transporte solicitado no está soportado.
      */
     public RouteResponse planRoute(RouteRequest request) {
         RouteStrategy strategy = strategies.get(request.mode().toUpperCase());
         if (strategy == null) {
-            throw new BusinessException("Unsupported transport mode: " + request.mode());
+            throw new BusinessException("Modo de transporte no soportado: " + request.mode());
         }
         return strategy.compute(request);
     }

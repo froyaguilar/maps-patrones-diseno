@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 /**
- * Entity representing statistics for a route calculation.
- * Stores details such as origin, destination, mode, distance, duration, and the time of calculation.
+ * Entidad que representa las estadísticas de un cálculo de ruta.
+ * Almacena detalles como origen, destino, modo, distancia, duración y momento de cálculo.
  */
 @Entity
 @Table(name = "route_stats")
@@ -39,7 +39,7 @@ public class RouteStats {
     @Column(nullable = false)
     private LocalDateTime calculationTime;
 
-    // Default constructor for JPA
+    // Constructor por defecto para JPA
     public RouteStats() {
     }
 
@@ -55,7 +55,7 @@ public class RouteStats {
         this.calculationTime = LocalDateTime.now();
     }
 
-    // Getters and Setters
+    // Getters y Setters
     public Long getId() {
         return id;
     }

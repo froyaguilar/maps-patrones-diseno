@@ -6,16 +6,16 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Custom annotation to mark methods for auditing.
- * When a method annotated with @AuditOperation is executed, AuditAspect will intercept it
- * and create an AuditEntry in the database.
+ * Anotación personalizada para marcar métodos que deben ser auditados.
+ * Cuando se ejecuta un método anotado con @AuditOperation, AuditAspect lo intercepta
+ * y crea una entrada de auditoría en la base de datos.
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface AuditOperation {
     /**
-     * The description of the audited operation.
-     * @return a String representing the action performed.
+     * Descripción de la operación auditada.
+     * @return Cadena que representa la acción realizada.
      */
     String value();
 }

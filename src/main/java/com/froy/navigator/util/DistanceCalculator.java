@@ -3,24 +3,24 @@ package com.froy.navigator.util;
 import com.froy.navigator.dto.GeoPoint;
 
 /**
- * Utility class for calculating distances between geographical points.
- * Uses the Haversine formula to calculate the great-circle distance between two points
- * on a sphere given their longitudes and latitudes.
+ * Clase de utilidades para calcular distancias entre puntos geográficos.
+ * Utiliza la fórmula de Haversine para obtener la distancia de gran círculo
+ * entre dos puntos en una esfera dadas sus longitudes y latitudes.
  */
 public class DistanceCalculator {
 
     /**
-     * Mean radius of the Earth in kilometers. Exposed for reuse in test cases
-     * and other calculations that need a standard Earth radius value.
+     * Radio medio de la Tierra en kilómetros. Se expone para reutilizar en pruebas
+     * y otros cálculos que necesiten un valor estándar del radio terrestre.
      */
-    public static final double EARTH_RADIUS_KM = 6371.0; // Earth's radius in kilometers
+    public static final double EARTH_RADIUS_KM = 6371.0; // Radio de la Tierra en kilómetros
 
     /**
-     * Calculates the distance between two geographical points using the Haversine formula.
+     * Calcula la distancia entre dos puntos geográficos usando la fórmula de Haversine.
      *
-     * @param point1 The first geographical point (origin).
-     * @param point2 The second geographical point (destination).
-     * @return The distance between the two points in kilometers.
+     * @param point1 Primer punto geográfico (origen).
+     * @param point2 Segundo punto geográfico (destino).
+     * @return Distancia entre los dos puntos en kilómetros.
      */
     public static double calculateDistance(GeoPoint point1, GeoPoint point2) {
         double lat1Rad = Math.toRadians(point1.lat());
