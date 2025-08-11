@@ -9,7 +9,11 @@ import com.froy.navigator.dto.GeoPoint;
  */
 public class DistanceCalculator {
 
-    private static final int EARTH_RADIUS_KM = 6371; // Earth's radius in kilometers
+    /**
+     * Mean radius of the Earth in kilometers. Exposed for reuse in test cases
+     * and other calculations that need a standard Earth radius value.
+     */
+    public static final double EARTH_RADIUS_KM = 6371.0; // Earth's radius in kilometers
 
     /**
      * Calculates the distance between two geographical points using the Haversine formula.
