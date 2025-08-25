@@ -24,18 +24,47 @@ import org.springframework.web.bind.annotation.RestController;
  * Expone un endpoint para planificar rutas utilizando diferentes modos de transporte.
  */
 @RestController
-@RequestMapping("/api/v1/routes")
+@RequestMapping(ApiConstants.ROUTES_BASE_PATH)
 @Tag(name = "Rutas", description = "Operaciones para planificar rutas")
-public class RouteController {
+public class RouteRestController {
 
     private final RoutePlanner routePlanner;
 
+    // --- OpenAPI Example Constants ---
+
+    private static final String EXAMPLE_ROUTE_RESPONSE = """
+            {
+              "distanceKm": 10.5,
+              "durationMinutes": 25,
+              "steps": [
+                "Salga de Av. Vallarta y continúe 300 m",
+                "Gire a la izquierda en Calle López Cotilla"
+              ],
+              "mode": "driving"
+            }""";
+
+    private static final String EXAMPLE_VALIDATION_ERROR = """
+            {
+              "timestamp": "2025-08-10T14:00:00Z",
+              "status": "BAD_REQUEST",
+              "message": "Error de validación",
+              "details": "origin.lat: Latitud inválida; mode: Debe ser 'driving', 'walking' o 'bicycling'"
+            }""";
+
+    private static final String EXAMPLE_ROUTE_NOT_FOUND = """
+            {
+              "timestamp": "2025-08-10T14:01:00Z",
+              "status": "NOT_FOUND",
+              "message": "No se encontró la ruta",
+              "details": "No hay ruta entre el origen y el destino proporcionados"
+            }""";
+
     /**
-     * Crea una instancia de RouteController con el servicio RoutePlanner.
+     * Crea una instancia de RouteRestController con el servicio RoutePlanner.
      *
      * @param routePlanner Servicio responsable de planificar rutas.
      */
-    public RouteController(RoutePlanner routePlanner) {
+    public RouteRestController(RoutePlanner routePlanner) {
         this.routePlanner = routePlanner;
     }
 
@@ -47,7 +76,7 @@ public class RouteController {
      * @param request Objeto RouteRequest con origen, destino y modo deseado.
      * @return ResponseEntity con los detalles de la ruta calculada.
      */
-    @PostMapping("/plan")
+    @PostMapping(ApiConstants.PLAN_ROUTE_PATH)
     @AuditOperation("Ruta Planificada")
     @Operation(summary = "Planificar una ruta", description = "Calcula una ruta entre dos puntos usando un modo de transporte")
     @ApiResponses(value = {
@@ -59,19 +88,9 @@ public class RouteController {
                             schema = @Schema(implementation = RouteResponse.class),
                             examples = {
                                     @ExampleObject(
-                                            name = "rutaEjemplo",
-                                            value = """
-                                                    {
-                                                      "distanceKm": 10.5,
-                                                      "durationMinutes": 25,
-                                                      "steps": [
-                                                        "Salga de Av. Vallarta y continúe 300 m",
-                                                        "Gire a la izquierda en Calle López Cotilla"
-                                                      ],
-                                                      "mode": "driving"
-                                                    }
-                                                    """
-                                    )
+                                            name = "Ruta de ejemplo",
+                                            summary = "Respuesta exitosa",
+                                            value = EXAMPLE_ROUTE_RESPONSE)
                             }
                     )
             ),
@@ -83,16 +102,9 @@ public class RouteController {
                             schema = @Schema(implementation = ApiError.class),
                             examples = {
                                     @ExampleObject(
-                                            name = "errorValidacion",
-                                            value = """
-                                                    {
-                                                      "timestamp": "2025-08-10T14:00:00Z",
-                                                      "status": "BAD_REQUEST",
-                                                      "message": "Error de validación",
-                                                      "details": "origin.lat: Latitud inválida; mode: Debe ser 'driving', 'walking' o 'bicycling'"
-                                                    }
-                                                    """
-                                    )
+                                            name = "Error de validación",
+                                            summary = "Solicitud incorrecta",
+                                            value = EXAMPLE_VALIDATION_ERROR)
                             }
                     )
             ),
@@ -104,16 +116,9 @@ public class RouteController {
                             schema = @Schema(implementation = ApiError.class),
                             examples = {
                                     @ExampleObject(
-                                            name = "rutaNoEncontrada",
-                                            value = """
-                                                    {
-                                                      "timestamp": "2025-08-10T14:01:00Z",
-                                                      "status": "NOT_FOUND",
-                                                      "message": "No se encontró la ruta",
-                                                      "details": "No hay ruta entre el origen y el destino proporcionados"
-                                                    }
-                                                    """
-                                    )
+                                            name = "Ruta no encontrada",
+                                            summary = "Ruta inexistente",
+                                            value = EXAMPLE_ROUTE_NOT_FOUND)
                             }
                     )
             )

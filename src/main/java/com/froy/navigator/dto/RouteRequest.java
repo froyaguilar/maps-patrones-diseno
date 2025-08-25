@@ -1,6 +1,6 @@
 package com.froy.navigator.dto;
 
-import com.froy.navigator.validation.SupportedMode;
+import com.froy.navigator.model.TransportMode;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -18,8 +18,8 @@ public record RouteRequest(
         @Schema(description = "Punto geográfico de destino")
         GeoPoint destination,
 
-        @SupportedMode
-        @Schema(description = "Modo de transporte", example = "driving")
-        String mode
+        @NotNull(message = "El modo de transporte no puede ser nulo")
+        @Schema(description = "Modo de transporte. Valores permitidos: CAR, BIKE, MOTORCYCLE", example = "CAR")
+        TransportMode mode
 ) {
 }

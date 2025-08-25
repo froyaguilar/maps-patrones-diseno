@@ -1,5 +1,5 @@
 # ===================================================================
-# CONFIGURACIÓN BASE (PERFIL 'PROD')
+# CONFIGURACIÓN DE DESARROLLO (PERFIL 'DEV')
 # ===================================================================
 spring:
   datasource:
@@ -21,17 +21,17 @@ server:
 
 # Mensaje de bienvenida por defecto
 mensaje:
-  bienvenida: Hola desde el ambiente de DESARROLLO (PROD)
+  bienvenida: Hola desde el ambiente de DESARROLLO (DEV)
 
 # OpenAPI / Swagger UI Configuration
 api:
   info:
-    title: API de Navegación (Prod)
+    title: API de Navegación (Desarrollo)
     version: v1.0.0
-    description: API para planificar rutas usando el perfil por defecto.
+    description: API para planificar rutas en diferentes modos de transporte.
     contact:
       name: Equipo de Desarrollo
-      email: prod-support@tuempresa.com
+      email: dev-support@tuempresa.com
     license:
       name: Apache 2.0
       url: http://www.apache.org/licenses/LICENSE-2.0.html

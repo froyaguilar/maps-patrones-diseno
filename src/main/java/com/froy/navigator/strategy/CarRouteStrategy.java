@@ -2,6 +2,7 @@ package com.froy.navigator.strategy;
 
 import com.froy.navigator.dto.RouteRequest;
 import com.froy.navigator.dto.RouteResponse;
+import com.froy.navigator.model.TransportMode;
 import com.froy.navigator.util.DistanceCalculator;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +12,7 @@ import java.util.List;
  * Estrategia concreta para planificar rutas en automóvil.
  * Prioriza la velocidad y utiliza autopistas cuando es apropiado.
  */
-@Component("CAR")
+@Component
 public class CarRouteStrategy implements RouteStrategy {
 
     @Override
@@ -24,12 +25,12 @@ public class CarRouteStrategy implements RouteStrategy {
                 "Conduce por autopistas principales",
                 "Llegada a " + request.destination()
         );
-        return new RouteResponse(round(distance), duration, steps, mode());
+        return new RouteResponse(round(distance), duration, steps, getMode().name());
     }
 
     @Override
-    public String mode() {
-        return "CAR";
+    public TransportMode getMode() {
+        return TransportMode.CAR;
     }
 
     private double round(double value) {

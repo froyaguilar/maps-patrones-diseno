@@ -2,6 +2,7 @@ package com.froy.navigator.strategy;
 
 import com.froy.navigator.dto.RouteRequest;
 import com.froy.navigator.dto.RouteResponse;
+import com.froy.navigator.model.TransportMode;
 import com.froy.navigator.util.DistanceCalculator;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +12,7 @@ import java.util.List;
  * Estrategia concreta para planificar rutas en bicicleta.
  * Evita las autopistas y prefiere rutas más cortas y escénicas.
  */
-@Component("BIKE")
+@Component
 public class BikeRouteStrategy implements RouteStrategy {
 
     @Override
@@ -25,12 +26,12 @@ public class BikeRouteStrategy implements RouteStrategy {
                 "Evita autopistas",
                 "Llegada a " + request.destination()
         );
-        return new RouteResponse(round(distance), duration, steps, mode());
+        return new RouteResponse(round(distance), duration, steps, getMode().name());
     }
 
     @Override
-    public String mode() {
-        return "BIKE";
+    public TransportMode getMode() {
+        return TransportMode.BIKE;
     }
 
     private double round(double value) {

@@ -9,7 +9,9 @@ import org.springframework.web.context.request.WebRequest;
 
 /**
  * Manejador global de excepciones para la API REST.
- * Captura excepciones específicas y retorna respuestas ApiError estandarizadas.
+ * Centraliza la lógica de manejo de errores, asegurando que todas las respuestas de error
+ * de la API sigan un formato consistente y predecible (ApiError).
+ * Utiliza la anotación @RestControllerAdvice para aplicarse a todos los @RestController.
  */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -60,7 +62,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiError> handleValidationExceptions(MethodArgumentNotValidException ex, WebRequest request) {
         String errors = ex.getBindingResult().getFieldErrors().stream()
                 .map(error -> error.getField() + ": " + error.getDefaultMessage())
-                .collect(java.util.stream.Collectors.joining("; "));
+                .collect(java.util.stream.Collectors.joining("; ")); // Une todos los errores de campo en un solo string.
 
         ApiError apiError = new ApiError(
                 HttpStatus.BAD_REQUEST,
@@ -72,7 +74,9 @@ public class GlobalExceptionHandler {
 
     /**
      * Captura cualquier otra excepción inesperada y retorna INTERNAL_SERVER_ERROR.
-     *
+     * Este es un manejador de "último recurso" para evitar que las trazas de pila (stack traces)
+     * se filtren al cliente. Registra el error y devuelve una respuesta genérica de error 500.
+     * 
      * @param ex Excepción inesperada lanzada.
      * @param request Petición web durante la cual ocurrió la excepción.
      * @return ResponseEntity con ApiError y estado INTERNAL_SERVER_ERROR.

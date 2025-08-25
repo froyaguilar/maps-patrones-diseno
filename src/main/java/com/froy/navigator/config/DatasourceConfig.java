@@ -11,5 +11,5 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories(basePackages = "com.froy.navigator.repository")
 public class DatasourceConfig {
     // Esta clase solo habilita los repositorios JPA.
-    // La configuración del DataSource se maneja en application.yml y application-prod.yml
+    // La configuración del DataSource se maneja en application.yml, application-prod.yml, application-dev.yml
 }

@@ -2,6 +2,7 @@ package com.froy.navigator.strategy;
 
 import com.froy.navigator.dto.RouteRequest;
 import com.froy.navigator.dto.RouteResponse;
+import com.froy.navigator.model.TransportMode;
 
 /**
  * Interfaz para las estrategias de planificación de rutas.
@@ -21,7 +22,7 @@ public interface RouteStrategy {
     /**
      * Devuelve el modo de transporte manejado por esta estrategia.
      *
-     * @return Cadena que representa el modo de transporte (ej. "CAR", "BIKE", "MOTORCYCLE").
+     * @return El enum TransportMode que maneja esta estrategia.
      */
-    String mode();
+    TransportMode getMode();
 }
