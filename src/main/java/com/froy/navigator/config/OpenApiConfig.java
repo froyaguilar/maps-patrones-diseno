@@ -11,9 +11,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 /**
- * Configuración de la documentación OpenAPI/Swagger para la aplicación.
- * Define la información básica que será mostrada en la interfaz de Swagger UI
- * de forma programática para mayor flexibilidad.
+ * Configuration for the application's OpenAPI/Swagger documentation.
+ * Defines the basic information to be displayed in the Swagger UI
+ * programmatically for greater flexibility.
  */
 @Configuration
 public class OpenApiConfig {
@@ -40,25 +40,25 @@ public class OpenApiConfig {
     private String licenseUrl;
 
     /**
-     * Crea un grupo de API para la versión 1.
-     * GroupedOpenApi permite segmentar la documentación en la UI de Swagger.
-     * Esto es útil para versionar APIs o agrupar endpoints por funcionalidad.
+     * Creates an API group for version 1.
+     * GroupedOpenApi allows segmenting the documentation in the Swagger UI.
+     * This is useful for versioning APIs or grouping endpoints by functionality.
      *
-     * @return un Grupo de OpenAPI para todos los endpoints bajo /api/v1.
+     * @return an OpenAPI Group for all endpoints under /api/v1.
      */
     @Bean
     public GroupedOpenApi publicApiV1() {
         return GroupedOpenApi.builder()
-                .group("Rutas-v1") // Nombre que aparecerá en el desplegable de Swagger UI
-                .pathsToMatch("/api/v1/**") // Patrón para incluir endpoints. '**' significa cualquier sub-ruta.
+                .group("Routes-v1") // Name that will appear in the Swagger UI dropdown
+                .pathsToMatch("/api/v1/**") // Pattern to include endpoints. '**' means any sub-path.
                 .build();
     }
 
     /**
-     * Bean que personaliza la información general de la API mostrada en Swagger UI.
-     * Utiliza los valores inyectados desde los archivos application.yml.
+     * Bean that customizes the general API information displayed in Swagger UI.
+     * Uses values injected from the application.yml files.
      *
-     * @return un objeto OpenAPI configurado.
+     * @return a configured OpenAPI object.
      */
     @Bean
     public OpenAPI customOpenAPI() {

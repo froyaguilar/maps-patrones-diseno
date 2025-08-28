@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 /**
- * Componente que registra en consola la URL de Swagger UI y los controladores disponibles al iniciar la aplicación.
- * Este componente está deshabilitado en el perfil 'prod' para no exponer endpoints en los logs de producción.
+ * Component that logs the Swagger UI URL and available controllers to the console on application startup.
+ * This component is disabled in the 'prod' profile to avoid exposing endpoints in production logs.
  */
 @Component
 @Profile("!prod")
@@ -37,17 +37,17 @@ public class StartupLogger implements CommandLineRunner {
         String swaggerUiUrl = String.format("http://localhost:%s%s/swagger-ui.html", serverPort, contextPath);
 
         log.info("====================================================================");
-        log.info("Swagger UI disponible en: {}", swaggerUiUrl);
-        log.info("Controladores y Endpoints disponibles:");
+        log.info("Swagger UI available at: {}", swaggerUiUrl);
+        log.info("Available Controllers and Endpoints:");
 
         RequestMappingHandlerMapping mapping = context.getBean(RequestMappingHandlerMapping.class);
         mapping.getHandlerMethods().forEach((info, method) -> {
             Class<?> controller = method.getBeanType();
-            // Añadimos una comprobación para evitar NullPointerException en manejadores sin ruta (p.ej. BasicErrorController)
+            // Add a check to avoid NullPointerException on handlers without a path (e.g., BasicErrorController)
             if (info.getPatternsCondition() != null && !controller.equals(BasicErrorController.class)) {
                 String path = info.getPatternsCondition().toString();
                 String controllerName = controller.getSimpleName();
-                log.info("  - Controlador: {} -> Ruta: {}", controllerName, path);
+                log.info("  - Controller: {} -> Path: {}", controllerName, path);
             }
         });
         log.info("====================================================================");

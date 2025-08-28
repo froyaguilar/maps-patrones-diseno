@@ -12,34 +12,34 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Controlador REST para obtener un mensaje de bienvenida.
- * Este es un endpoint simple para verificar que la configuración de perfiles
- * de la aplicación está funcionando correctamente.
+ * REST controller for getting a welcome message.
+ * This is a simple endpoint to verify that the application's profile configuration
+ * is working correctly.
  */
 @RestController
-@RequestMapping(ApiConstants.GREETING_BASE_PATH) // Path base: /api/v1/greeting
-@Tag(name = "Mensaje de Bienvenida", description = "Operaciones para obtener mensajes de bienvenida")
+@RequestMapping(ApiConstantsRequestMapping.GREETINGRESTCONTROLLER_GREETING_BASE_PATH) // Base path: /api/v1/greeting
+@Tag(name = "Welcome Message", description = "Operations to get welcome messages")
 public class GreetingRestController {
 
-    // Inyecta el valor de la propiedad 'mensaje.bienvenida'
-    // desde el archivo de propiedades activo (application.yml, application-dev.yml, etc.).
+    // Injects the value of the 'mensaje.bienvenida' property
+    // from the active properties file (application.yml, application-dev.yml, etc.).
     @Value("${mensaje.bienvenida}")
     private String greetingMessage;
 
     /**
-     * Devuelve el mensaje de bienvenida configurado para el perfil activo.
+     * Returns the welcome message configured for the active profile.
      *
-     * @return ResponseEntity con el mensaje de bienvenida y estado 200 OK.
+     * @return ResponseEntity with the welcome message and 200 OK status.
      */
-    @GetMapping // Se mapea a la raíz del controlador: /api/v1/greeting
-    @Operation(summary = "Obtener mensaje de bienvenida", description = "Devuelve un mensaje de bienvenida que varía según el perfil de Spring activo.")
-    @ApiResponse(responseCode = "200", description = "Mensaje obtenido correctamente", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string", example = "Hola desde el ambiente DEFAULT")))
+    @GetMapping // Mapped to the controller's root: /api/v1/greeting
+    @Operation(summary = "Get welcome message", description = "Returns a welcome message that varies depending on the active Spring profile.")
+    @ApiResponse(responseCode = "200", description = "Message obtained successfully", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string", example = "Hello from the DEFAULT environment")))
     public ResponseEntity<String> getGreeting() {
-        // En lugar de devolver el String directamente, lo envolvemos en un ResponseEntity.
-        // Esto nos da más control. ResponseEntity.ok() es un atajo para crear
-        // una respuesta con estado 200 OK y el cuerpo proporcionado.
-        // Es funcionalmente equivalente a `return greetingMessage;` en este caso,
-        // pero es una práctica más explícita.
+        // Instead of returning the String directly, we wrap it in a ResponseEntity.
+        // This gives us more control. ResponseEntity.ok() is a shortcut to create
+        // a response with a 200 OK status and the provided body.
+        // It is functionally equivalent to `return greetingMessage;` in this case,
+        // but it is a more explicit practice.
         return ResponseEntity.ok(greetingMessage);
     }
 }

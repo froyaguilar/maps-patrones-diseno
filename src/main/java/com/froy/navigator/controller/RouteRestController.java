@@ -20,12 +20,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Controlador REST que gestiona las solicitudes de planificación de rutas.
- * Expone un endpoint para planificar rutas utilizando diferentes modos de transporte.
+ * REST controller that manages route planning requests.
+ * Exposes an endpoint to plan routes using different transport modes.
  */
 @RestController
-@RequestMapping(ApiConstants.ROUTES_BASE_PATH)
-@Tag(name = "Rutas", description = "Operaciones para planificar rutas")
+@RequestMapping(ApiConstantsRequestMapping.ROUTERESTCONTROLLER_RM_ROUTES_BASE_PATH)
+@Tag(name = "Routes", description = "Operations for planning routes")
 public class RouteRestController {
 
     private final RoutePlanner routePlanner;
@@ -37,8 +37,8 @@ public class RouteRestController {
               "distanceKm": 10.5,
               "durationMinutes": 25,
               "steps": [
-                "Salga de Av. Vallarta y continúe 300 m",
-                "Gire a la izquierda en Calle López Cotilla"
+                "Exit Av. Vallarta and continue for 300 m",
+                "Turn left on Calle López Cotilla"
               ],
               "mode": "driving"
             }""";
@@ -47,77 +47,77 @@ public class RouteRestController {
             {
               "timestamp": "2025-08-10T14:00:00Z",
               "status": "BAD_REQUEST",
-              "message": "Error de validación",
-              "details": "origin.lat: Latitud inválida; mode: Debe ser 'driving', 'walking' o 'bicycling'"
+              "message": "Validation error",
+              "details": "origin.lat: Invalid latitude; mode: Must be 'driving', 'walking', or 'bicycling'"
             }""";
 
     private static final String EXAMPLE_ROUTE_NOT_FOUND = """
             {
               "timestamp": "2025-08-10T14:01:00Z",
               "status": "NOT_FOUND",
-              "message": "No se encontró la ruta",
-              "details": "No hay ruta entre el origen y el destino proporcionados"
+              "message": "Route not found",
+              "details": "No route exists between the provided origin and destination"
             }""";
 
     /**
-     * Crea una instancia de RouteRestController con el servicio RoutePlanner.
+     * Creates an instance of RouteRestController with the RoutePlanner service.
      *
-     * @param routePlanner Servicio responsable de planificar rutas.
+     * @param routePlanner Service responsible for planning routes.
      */
     public RouteRestController(RoutePlanner routePlanner) {
         this.routePlanner = routePlanner;
     }
 
     /**
-     * Planifica una ruta basada en el origen, destino y modo de transporte proporcionados.
-     * El cuerpo de la petición se valida con Jakarta Bean Validation.
-     * Se crea una entrada de auditoría por cada planificación exitosa.
+     * Plans a route based on the provided origin, destination, and transport mode.
+     * The request body is validated using Jakarta Bean Validation.
+     * An audit entry is created for each successful planning.
      *
-     * @param request Objeto RouteRequest con origen, destino y modo deseado.
-     * @return ResponseEntity con los detalles de la ruta calculada.
+     * @param request RouteRequest object with origin, destination, and desired mode.
+     * @return ResponseEntity with the details of the calculated route.
      */
-    @PostMapping(ApiConstants.PLAN_ROUTE_PATH)
-    @AuditOperation("Ruta Planificada")
-    @Operation(summary = "Planificar una ruta", description = "Calcula una ruta entre dos puntos usando un modo de transporte")
+    @PostMapping(ApiConstantsRequestMapping.ROUTERESTCONTROLLER_PM_PLAN_ROUTE_PATH)
+    @AuditOperation("Route Planned")
+    @Operation(summary = "Plan a route", description = "Calculates a route between two points using a transport mode")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
-                    description = "Ruta calculada correctamente",
+                    description = "Route calculated successfully",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = RouteResponse.class),
                             examples = {
                                     @ExampleObject(
-                                            name = "Ruta de ejemplo",
-                                            summary = "Respuesta exitosa",
+                                            name = "Example Route",
+                                            summary = "Successful response",
                                             value = EXAMPLE_ROUTE_RESPONSE)
                             }
                     )
             ),
             @ApiResponse(
                     responseCode = "400",
-                    description = "Solicitud inválida (parámetros incorrectos o incompletos)",
+                    description = "Invalid request (incorrect or incomplete parameters)",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ApiError.class),
                             examples = {
                                     @ExampleObject(
-                                            name = "Error de validación",
-                                            summary = "Solicitud incorrecta",
+                                            name = "Validation Error",
+                                            summary = "Incorrect request",
                                             value = EXAMPLE_VALIDATION_ERROR)
                             }
                     )
             ),
             @ApiResponse(
                     responseCode = "404",
-                    description = "No se encontró una ruta entre los puntos dados",
+                    description = "No route was found between the given points",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ApiError.class),
                             examples = {
                                     @ExampleObject(
-                                            name = "Ruta no encontrada",
-                                            summary = "Ruta inexistente",
+                                            name = "Route Not Found",
+                                            summary = "Non-existent route",
                                             value = EXAMPLE_ROUTE_NOT_FOUND)
                             }
                     )
